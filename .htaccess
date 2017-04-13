@@ -1,0 +1,25 @@
+Options +FollowSymlinks
+RewriteEngine On
+
+# deal with admin first
+RewriteCond %{REQUEST_URI} ^/(admin)
+RewriteRule ^admin/assets/(.*)$ yii-application/backend/web/assets/$1 [L]
+RewriteRule ^admin/css/(.*)$ yii-application/backend/web/css/$1 [L]
+RewriteRule ^admin/img/(.*)$ yii-application/backend/web/img/$1 [L]
+RewriteRule ^admin/js/(.*)$ yii-application/backend/web/js/$1 [L]
+RewriteRule ^admin/uploads/(.*)$ yii-application/backend/web/uploads/$1 [L]
+
+RewriteCond %{REQUEST_URI} !^/yii-application/backend/web/(assets|css|img|js|uploads)/
+RewriteCond %{REQUEST_URI} ^/(admin)  
+RewriteRule ^.*$ yii-application/backend/web/index.php [L]
+
+
+RewriteCond %{REQUEST_URI} ^/(assets|css|img|js|uploads)
+RewriteRule ^assets/(.*)$ yii-application/frontend/web/assets/$1 [L]
+RewriteRule ^css/(.*)$ yii-application/frontend/web/css/$1 [L]
+
+RewriteCond %{REQUEST_URI} !^/yii-application/(frontend|backend)/web/(assets|css|img|js|uploads)/
+RewriteCond %{REQUEST_URI} !index.php
+RewriteCond %{REQUEST_FILENAME} !-f [OR]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^.*$ yii-application/frontend/web/index.php
